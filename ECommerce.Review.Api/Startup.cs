@@ -1,3 +1,5 @@
+using Ecommerce.Core.Interfaces;
+using Ecommerce.Infrastructure.Data;
 using ECommerce.Infrasctrucure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,10 +24,13 @@ namespace ECommerce.Review.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                    .AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             services.AddDbContext<StoreContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Store")));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddSwaggerGen(c =>
             {

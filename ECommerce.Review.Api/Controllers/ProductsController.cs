@@ -1,4 +1,5 @@
 ﻿using Ecommerce.Core;
+using Ecommerce.Core.Interfaces;
 using ECommerce.Infrasctrucure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,24 +12,39 @@ namespace ECommerce.Review.Api.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly StoreContext _context;
+        private readonly IProductRepository _productRepository;
 
-        public ProductsController(StoreContext context)
+        public ProductsController(IProductRepository productRepository)
         {
-            _context = context;
+            _productRepository = productRepository;
         }
         [HttpGet]
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
-            var listProducts = await _context.Products.ToListAsync();
+            var listProducts = await _productRepository.GetProducsAsync();
             return Ok(listProducts);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var product = await _context.Products.FindAsync(id);
+            var product = await _productRepository.GetProductByIdAsync(id);
             return Ok(product);
         }
+
+        [HttpGet("brands")]
+        public async Task<ActionResult<List<ProductBrand>>> GetProductBrands()
+        {
+            var brands = await _productRepository.GetProducBrandsAsync();
+            return Ok(brands);
+        }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<List<ProductBrand>>> GetProductTypes()
+        {
+            var productTypes = await _productRepository.GetProducTypesAsync();
+            return Ok(productTypes);
+        }
+
     }
 }
