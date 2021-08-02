@@ -1,3 +1,4 @@
+using Ecommerce.Core.Entities;
 using Ecommerce.Core.Interfaces;
 using Ecommerce.Infrastructure.Data;
 using ECommerce.Infrasctrucure;
@@ -31,6 +32,7 @@ namespace ECommerce.Review.Api
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddSwaggerGen(c =>
             {
