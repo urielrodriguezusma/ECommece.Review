@@ -11,7 +11,8 @@ namespace Ecommerce.Core.Specification
     {
         public ProductWithTypesAndBrandsSpecification(int id) : base(d => d.Id == id)
         {
-
+            AddInclude(d => d.ProductBrand);
+            AddInclude(d => d.ProductType);
         }
         public ProductWithTypesAndBrandsSpecification()
         {

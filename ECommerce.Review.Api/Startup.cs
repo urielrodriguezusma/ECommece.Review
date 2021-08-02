@@ -51,6 +51,7 @@ namespace ECommerce.Review.Api
             }
 
             app.UseRouting();
+            app.UseStaticFiles();
 
             app.UseAuthorization();
 
